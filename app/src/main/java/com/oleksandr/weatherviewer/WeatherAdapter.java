@@ -1,7 +1,6 @@
 package com.oleksandr.weatherviewer;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Oleksandr on 30.03.2017.
@@ -23,14 +21,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private static final String TAG = WeatherAdapter.class.getSimpleName();
     private Context mContext;
     private ArrayList<Weather> mList;
-    private String mDateChange = new String();
     //private OnItemClickListener mListener;
 
 
 
     public WeatherAdapter(Context context, ArrayList<Weather> list) {
         this.mContext = context;
-        Log.i("SIZE", list.size() + "");
+        Log.i(TAG + "SIZE LIST", list.size() + "");
         this.mList = list;
 
     }
@@ -46,8 +43,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Weather item = mList.get(position);
+
         if (position == 0 || !(item.getDate().equals(mList.get(position - 1).getDate()))) {
             holder.mTextDate.setText(item.getDate());
+            holder.mTextDate.setVisibility(View.VISIBLE);
         } else{
             holder.mTextDate.setVisibility(View.GONE);
         }
