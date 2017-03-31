@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeatherViewer</string>
+    <string name="action_settings">Настройки</string>
+    <string name="humidity">Влажность,%</string>
+    <string name="pressure">Давление, гПа</string>
+    <string name="temp">Темп, °C</string>
+</resources>
