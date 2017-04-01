@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -32,12 +33,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
+    private static final String DATE_FORMAT = "EEE,  MMM d,  yyyy";
     private static final Uri LINK = Uri.parse("http://api.openweathermap.org/data/2.5/forecast?q=Kiev")
             .buildUpon()
             .appendQueryParameter("units", "metric")
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new GetWeatherTask().execute("Khmelnytskyy");
+        new GetWeatherTask().execute("Khmelnytskyy", getString(R.string.localization));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String crateUrl(String city){
+    private String crateUrl(String city, String local){
         if (city.isEmpty()){
             Log.e(TAG, "City is empty, incorrect link");
             return null;
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO add chose imperial or metric
 
         try{
-            String result = baseUrl + "&units=metric" + "&APPID=" + apiKey;
+            String result = baseUrl + "&units=metric" + "&lang=" + local + "&APPID=" + apiKey;
             Log.i(TAG, result);
             return result;
         }catch (Exception e){
@@ -159,14 +166,20 @@ public class MainActivity extends AppCompatActivity {
                 //Weather item
                 JSONObject json = jsonArray.getJSONObject(i);
                 Log.i("JSON", jsonArray.toString());
-                item.setDate(json.getString("dt_txt").substring(0,10));
+
+                //Format day
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = format.parse(json.getString("dt_txt").substring(0,10));
+
+                item.setDate(DateFormat.format(DATE_FORMAT, date).toString());
                 item.setTime(json.getString("dt_txt").substring(11,16));
 
                 JSONObject jsonObjectMain = json.getJSONObject("main");
 
-                item.setHumidity(jsonObjectMain.getString("humidity") + " %");
-                item.setPressure(jsonObjectMain.getString("pressure") + " hpa");
-                item.setTemp(jsonObjectMain.getString("temp") + " °C");
+                // TODO: 01.04.2017 fix humidity
+                item.setHumidity(getString(R.string.humidity, jsonObjectMain.getString("humidity")) + "%");
+                item.setPressure(getString(R.string.pressure, jsonObjectMain.getString("pressure")));
+                item.setTemp(getString(R.string.temp, jsonObjectMain.getString("temp")));
 
                 //get link icon and cloudiness
                 JSONArray jsonWeather = json.getJSONArray("weather");
@@ -182,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
     }
@@ -190,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(String... urls) {
-            JSONObject jsonObject = getJsonObject(crateUrl(urls[0]));
+            JSONObject jsonObject = getJsonObject(crateUrl(urls[0], urls[1]));
             if (jsonObject == null){
                 return null;
             }
