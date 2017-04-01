@@ -45,7 +45,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         final Weather item = mList.get(position);
 
         if (position == 0 || !(item.getDate().equals(mList.get(position - 1).getDate()))) {
-            holder.mTextDate.setText(item.getDate());
+            if (position == 0) {
+                holder.mTextDate.setText(mContext.getString(R.string.today, item.getDate()));
+            }else {
+                holder.mTextDate.setText(item.getDate());
+            }
             holder.mTextDate.setVisibility(View.VISIBLE);
         } else{
             holder.mTextDate.setVisibility(View.GONE);
