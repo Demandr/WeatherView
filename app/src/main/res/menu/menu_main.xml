@@ -1,7 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.oleksandr.weatherviewer.MainActivity" >
+    tools:context="com.oleksandr.weatherviewer.ui.activity.MainActivity" >
+
+    <item
+            android:id="@+id/menu_item_search"
+            android:title="@string/search"
+            android:icon="@android:drawable/ic_menu_search"
+            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:showAsAction="always"/>
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

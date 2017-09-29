@@ -3,16 +3,28 @@
     <string name="action_settings">Settings</string>
     <string name="localization">en</string>
     <string name="today">%s Today</string>
+    <string name="search">Search</string>
 
     <string name="temp_text">Temp, °C</string>
     <string name="humidity_text">Humidity, %</string>
     <string name="pressure_text">Pressure, hpa</string>
 
-    <string name="temp">%s °C</string>
-    <string name="humidity">%1$s </string>
-    <string name="pressure">%s hpa</string>
+    <string name="temp">%d °C</string>
+    <string name="humidity">%d%%</string>
+    <string name="pressure">%d hpa</string>
 
-    <string name="api_key" translatable="false">d8f1e348c20c1d685e7bfabd90eb4898</string>
+    <!--request to get JSON -->
+
     <string name="web_service_url" translatable="false">http://api.openweathermap.org/data/2.5/forecast?q=%s</string>
+    <string name="web_service_url_new" translatable="false">http://api.openweathermap.org/data/2.5/</string>
+
+    <string name="key_units" translatable="false">units</string>
+        <!-- units = -->
+        <string name="metric" translatable="false">metric</string>
+        <string name="imperial" translatable="false">imperial</string>
+    <string name="key_lang" translatable="false">lang</string>
+    <string name="key_appid" translatable="false">APPID</string>
+
+    <!--request to get icon -->
     <string name="icon_url" translatable="false">http://openweathermap.org/img/w/%s.png</string>
 </resources>

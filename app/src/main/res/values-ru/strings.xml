@@ -3,13 +3,14 @@
     <string name="app_name">WeatherViewer</string>
     <string name="action_settings">Настройки</string>
 
-    <string name="humidity">%1$s </string>
-    <string name="pressure">%s гПа</string>
-    <string name="temp">%s °C</string>
+    <string name="humidity">%d%%</string>
+    <string name="pressure">%d гПа</string>
+    <string name="temp">%d °C</string>
 
     <string name="humidity_text">Влажность,%</string>
     <string name="pressure_text">Давление, гПа</string>
     <string name="temp_text">Темп, °C</string>
     <string name="localization">ru</string>
     <string name="today">%s Cегодня</string>
+    <string name="search">Поиск</string>
 </resources>
